@@ -1,0 +1,23 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.chart-container {
+  border: 2px solid #c0c0c0;
+  border-radius: 4px;
+  resize: both;
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 0.6rem;
+}
+::-webkit-scrollbar-track {
+  background: #c0c0c0;
+}
+::-webkit-scrollbar-thumb {
+  background: #939c96;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
