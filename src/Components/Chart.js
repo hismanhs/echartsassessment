@@ -84,6 +84,7 @@ export default function App() {
       ]
     };
     myChart.setOption(option);
+    //pass data to resize Chart added 
     myChart.resize({
       width: dimensions.width,
       height: dimensions.height

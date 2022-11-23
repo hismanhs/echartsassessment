@@ -5,26 +5,44 @@ import "./styles.css";
 
 export default function App() {
   const [ActiveDrag, setActiveDrag] = React.useState(false);
+  const [position, setPosition] = React.useState(false)
+  const [Active, setActive] = React.useState(false)
 
   return (
-    <div className="App">
-      <div
-        style={{
-          cursor: "pointer",
-          textAlign: "center",
-          borderRadius: "15px",
-          margin: "1rem",
-          padding: "0.5rem",
-          color: "#FFF",
-          backgroundColor: ActiveDrag ? "red" : "rgba(26, 137, 23, 1)"
-        }}
-        onClick={() => setActiveDrag(!ActiveDrag)}
-      >
-        {!ActiveDrag ? "Activate Drag " : "Deactivate Drag"}
+    <div>
+      <div style={{ display: 'flex' }}>
+        <span
+          onClick={() => setActiveDrag(!ActiveDrag)}
+          className="togelTab"
+          style={{
+            backgroundColor: ActiveDrag ? "red" : "#d3d3d3"
+          }}
+        >
+          {!ActiveDrag ? "Click to Activate Drag " : "Click to Deactivate Drag"}
+        </span>
+        <span
+          onClick={() => setActive(!Active)}
+          className="togelTab"
+          style={{
+            backgroundColor: Active ? "#90D790" : "#d3d3d3"
+          }}
+        >{Active ? 'Click To Set Default Position': 'Click to toggle position' }</span>
+        {Active && <span
+          onClick={() => setPosition(!position)}
+          className="togelTab"
+          style={{
+            backgroundColor: ActiveDrag ? "red" : "#B8FFB8"
+          }}
+        >{position ? 'Click to Move Left' : 'Click to Move Right'}</span>}
       </div>
-      <DragComponet Active={ActiveDrag}>
-        <Chart />
-      </DragComponet>
+      <div style={{ position: 'relative' }}>
+        <div className={!Active&&"positionContainer"} style={position ? { right: '0', width: '50%', position: 'absolute' } : { left: '0', width: '50%', position: 'absolute' }}>
+          <DragComponet Active={ActiveDrag}>
+            <Chart />
+          </DragComponet>
+        </div>
+      </div>
+
     </div>
   );
 }
