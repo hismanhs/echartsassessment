@@ -1,30 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import Chart from "./Components/Chart";
-import DragComponet from "./Components/Drag";
+import TogelButton from './Components/TogelButton';
 import "./styles.css";
 
 export default function App() {
-  const [ActiveDrag, setActiveDrag] = React.useState(false);
+  const [Requiredstyle, setStyle] = useState({})
 
+  const DefaultPosition = {
+    width: '100%'
+  }
+  const PositionLeft = {
+    right: '0', width: '50%', position: 'absolute'
+  }
+  const PositionRight = {
+    left: '0', width: '50%', position: 'absolute'
+  }
+
+  const handleStyle = (param1, param2) => {
+    if (param1 === 'CurrentPosition') {
+      param2 ? setStyle(PositionLeft) : setStyle(PositionRight)
+    } else {
+      setStyle(DefaultPosition)
+    }
+  }
+  
   return (
-    <div className="App">
-      <div
-        style={{
-          cursor: "pointer",
-          textAlign: "center",
-          borderRadius: "15px",
-          margin: "1rem",
-          padding: "0.5rem",
-          color: "#FFF",
-          backgroundColor: ActiveDrag ? "red" : "rgba(26, 137, 23, 1)"
-        }}
-        onClick={() => setActiveDrag(!ActiveDrag)}
-      >
-        {!ActiveDrag ? "Activate Drag " : "Deactivate Drag"}
+    <div>
+      <TogelButton handleStyles={handleStyle} />
+      <div style={{ position: 'relative' }}>
+        <div style={Requiredstyle}>
+          <Chart />
+        </div>
       </div>
-      <DragComponet Active={ActiveDrag}>
-        <Chart />
-      </DragComponet>
     </div>
   );
 }

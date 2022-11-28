@@ -1,27 +1,27 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import * as echarts from "echarts";
 import { ApiResponse } from "./Util";
+import ResizeComponet from "./CustomResize";
 
-export default function App() {
+export default function Chart(props) {
   const echartsDom = useRef(null);
-  const [dimensions, setDimensions] = React.useState({
+  const [boxSize, setBoxSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight
-  });
-
-  React.useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-  }, []);
-  const handleResize = () => {
-    setDimensions({
-      width: window.innerWidth,
-      height: window.innerHeight
-    });
-  };
+    height: window.innerHeight - 100
+  })
   useEffect(() => {
     run(ApiResponse);
   });
-
+  useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, []);
+  const handleResize = () => {
+    let customHeight = window.innerHeight - 100
+    setBoxSize({
+      width: window.innerWidth,
+      height: customHeight
+    });
+  };
   const run = (APIData) => {
     const myChart = echarts.init(echartsDom.current);
     const option = {
@@ -84,15 +84,16 @@ export default function App() {
       ]
     };
     myChart.setOption(option);
-    myChart.resize({
-      width: dimensions.width,
-      height: dimensions.height
-    });
+    //pass data to resize Chart added 
+    myChart.resize(boxSize);
   };
 
+
   return (
-    <div className="chart-container">
-      <div ref={echartsDom} style={{ width: "100%", height: "100%" }} />
-    </div>
+    <ResizeComponet
+      handelSize={(size) => setBoxSize(size)}
+    >
+      <div ref={echartsDom} />
+    </ResizeComponet>
   );
 }
