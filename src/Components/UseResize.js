@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 
 export const useResize = (ref, deps = [], options) => {
     const {
-        onPointerDown = () => { },
-        onPointerUp = () => { },
-        onPointerMove = () => { },
+        onResize = () => { },
         onSizeChange = () => { }
     } = options;
 
@@ -13,34 +11,25 @@ export const useResize = (ref, deps = [], options) => {
     useEffect(() => {
         const element = ref.current;
         if (element) {
-            element.addEventListener("pointerdown", handlePointerDown);
-            element.addEventListener("pointerup", handlePointerUp);
-            element.addEventListener("pointermove", handlePointerMove);
-
+            element.addEventListener("resize", handleResize);
+            const observer = new MutationObserver(handleResize);
+            observer.observe(element, { attributes: true, attributeOldValue: true, attributeFilter: ['style'] });
             return () => {
-                element.removeEventListener("pointerdown", handlePointerDown);
-                element.removeEventListener("pointerup", handlePointerUp);
-                element.removeEventListener("pointermove", handlePointerMove);
+                element.addEventListener("resize", handleResize);
             };
         }
     });
-
-    const handlePointerDown = (e) => {
-        setIsDragging(true);
-        onPointerDown(e);
-    };
-
-    const handlePointerUp = (e) => {
-        setIsDragging(false);
-        onPointerUp(e);
-    };
-
-    const handlePointerMove = (e) => {
-        onPointerMove(e);
-        if (isDragging) {
-            onSizeChange(e);
-        }
-    };
+   
+    const handleResize = (el) => {
+        
+        const width = parseInt(el.clientWidth);
+        const height = parseInt(el.clientHeight);
+        onResize(el)
+        onSizeChange({
+            width: `${width}px`,
+            height: `${height}px`
+        });
+    }
 
     return { isDragging };
 };

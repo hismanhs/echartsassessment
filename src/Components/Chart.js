@@ -5,23 +5,15 @@ import ResizeComponet from "./CustomResize";
 
 export default function Chart(props) {
   const echartsDom = useRef(null);
+
   const [boxSize, setBoxSize] = useState({
     width: window.innerWidth,
-    height: window.innerHeight - 100
+    height: window.innerHeight
   })
   useEffect(() => {
     run(ApiResponse);
   });
-  useEffect(() => {
-    window.addEventListener("resize", handleResize, false);
-  }, []);
-  const handleResize = () => {
-    let customHeight = window.innerHeight - 100
-    setBoxSize({
-      width: window.innerWidth,
-      height: customHeight
-    });
-  };
+
   const run = (APIData) => {
     const myChart = echarts.init(echartsDom.current);
     const option = {
@@ -90,10 +82,10 @@ export default function Chart(props) {
 
 
   return (
-    <ResizeComponet
-      handelSize={(size) => setBoxSize(size)}
-    >
-      <div ref={echartsDom} />
-    </ResizeComponet>
+      <ResizeComponet
+        togel={props.style}
+        handelSize={(size) => setBoxSize(size)}>
+        <div ref={echartsDom} />
+      </ResizeComponet>
   );
 }
