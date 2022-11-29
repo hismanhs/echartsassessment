@@ -20,7 +20,7 @@ export default function ResizeComponet(props) {
     });
     useEffect(() => {
         handleResize()
-    }, [Resize]);
+    }, [props.togel]);
 
     const handleResize = () => {
         const el = divRef.current;
@@ -33,8 +33,8 @@ export default function ResizeComponet(props) {
     }
 
     return (
-        <div style={props.style}  >
-            <div ref={divRef} className="chart-container" onClick={handleResize}>
+        <div style={props.togel}  >
+            <div ref={divRef} className="chart-container" >
                 {props.children}
             </div>
         </div>

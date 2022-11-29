@@ -4,7 +4,7 @@ import TogelButton from './Components/TogelButton';
 import "./styles.css";
 
 export default function App() {
-  const [Requiredstyle, setStyle] = useState({})
+  const [getstyle, setStyle] = useState({})
 
   const DefaultPosition = {
     width: '100%'
@@ -28,9 +28,7 @@ export default function App() {
     <div>
       <TogelButton handleStyles={handleStyle} />
       <div style={{ position: 'relative' }}>
-        <div style={Requiredstyle}>
-          <Chart />
-        </div>
+          <Chart Requiredstyle={getstyle}/>
       </div>
     </div>
   );

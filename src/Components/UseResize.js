@@ -6,7 +6,7 @@ export const useResize = (ref, deps = [], options) => {
         onSizeChange = () => { }
     } = options;
 
-    const [isDragging, setIsDragging] = useState(false);
+    const [isDragging, setIsDragging] = useState({width:'',height:''});
 
     useEffect(() => {
         const element = ref.current;
@@ -29,6 +29,10 @@ export const useResize = (ref, deps = [], options) => {
             width: `${width}px`,
             height: `${height}px`
         });
+        setIsDragging({
+            width: `${width}px`,
+            height: `${height}px`
+        })
     }
 
     return { isDragging };

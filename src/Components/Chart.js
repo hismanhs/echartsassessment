@@ -10,6 +10,16 @@ export default function Chart(props) {
     width: window.innerWidth,
     height: window.innerHeight
   })
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize, false);
+  }, []);
+  const handleResize = () => {
+    setBoxSize({
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+  };
   useEffect(() => {
     run(ApiResponse);
   });
@@ -82,10 +92,11 @@ export default function Chart(props) {
 
 
   return (
-      <ResizeComponet
-        togel={props.style}
-        handelSize={(size) => setBoxSize(size)}>
-        <div ref={echartsDom} />
-      </ResizeComponet>
+    <ResizeComponet
+      togel={props.Requiredstyle}
+      handelSize={(size) => setBoxSize(size)}
+      children={<div ref={echartsDom} />}
+    />
+
   );
 }
